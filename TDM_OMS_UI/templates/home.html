@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <form method="post">
+        <div class="form-group mb-4">
+            <p>Select the below options to create the synthetic test data from your schema</p>
+            <label for="schema_path">Provide the path of your schema :</label>
+            <input class="form-control" type="text" id="schema_path" name="schema_path" required>
+            <label for="op_path">Provide the path of your output location :</label>
+            <input class="form-control" type="text" id="op_path" name="op_path" required>
+        </div>
+
+        <br>
+        <label> <b>Test data generation options(click below): </b></label>
+        <br>
+        <div class="btn-group-vertical" id="process">
+            <input class="btn-check form-control" type="radio" id="order" name="process" value="order">
+            <label class="btn btn-outline-secondary" for="order">Generate Synthetic data for order xmls</label>
+
+            <input class="btn-check form-control" type="radio" id="return" name="process" value="return">
+            <label class="btn btn-outline-secondary" for="return">Generate Synthetic data for return order xmls</label>
+
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <button class="btn btn-secondary mb-4" type="submit">Submit</button>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </form>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+{% endblock %}

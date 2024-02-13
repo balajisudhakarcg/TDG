@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+     <a class="btn btn-secondary" href="{{url_for('add_rules')}}" role="button">Add Rules</a>
+</div>
+<table class="table table-striped">
+
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">XPATH</th>
+        <th scope="col">ACTION</th>
+        <th scope="col">ATTRIBUTE</th>
+        <th scope="col">TAG</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for r in rules_data %}
+    <tr>
+
+        <th scope="row">{{ r[0] }}</th>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

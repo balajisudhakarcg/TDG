@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <p><b> Add your new rules here!!! </b></p>
+    <form action="http://localhost:5001/add_rules" method="post">
+        <div class="mb-3">
+            <label for="input_xpath" class="form-label">XPATH:</label>
+            <input type="text" class="form-control" id="input_xpath" name="input_xpath">
+        </div>
+        <div class="mb-3">
+            <label for="input_action" class="form-label">ACTION:</label>
+            <input type="text" class="form-control" id="input_action" name="input_action">
+        </div>
+        <div class="mb-3">
+            <label for="input_attr" class="form-label">ATTRIBUTE:</label>
+            <input type="text" class="form-control" id="input_attr" name="input_attr">
+        </div>
+        <div class="mb-3">
+            <label for="input_tag" class="form-label">TAG:</label>
+            <input type="text" class="form-control" id="input_tag" name="input_tag">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
