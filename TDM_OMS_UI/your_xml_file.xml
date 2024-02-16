@@ -1,0 +1,36 @@
+<MultiApi> 
+ <API FlowName="" IsExtendedDbApi="" Name="createOrder">
+ <Input>
+ <Order AuthorizedClient="WCS" BuyerUserId="BuyerID" CustomerEMailID="da@abc.com" CustomerPONo="CustomerPO" EnterpriseCode="DEFAULT" EntryType="Web" IsShipComplete="N" OrderDate="2019-07-11T19:18:10.688Z" OrderNo="11550060" PaymentStatus="AUTHORIZED" SellerOrganizationCode="DEFAULT">
+     <PriceInfo Currency="USD" />
+       <OrderLines>
+         <OrderLine DeliveryMethod="SHP" OrderedQty="3.0" PrimeLineNo="1">
+             <Item ItemID="Item1" ProductClass="GOOD" UnitOfMeasure="EACH" />
+             <PersonInfoShipTo AddressID="NickName" AddressLine1="Line1" AddressLine2="" AddressLine3="" City="City" Country="US" DayPhone="123456789" EMailID="aa@gmail.com" EveningPhone="123456789" FirstName="First" LastName="Last" State="AA" ZipCode="12345" />
+             <LinePriceInfo IsPriceLocked="Y" ListPrice="10.00" RetailPrice="11.00" UnitPrice="18.45" />
+         </OrderLine>
+     <OrderLine DeliveryMethod="SHP" OrderedQty="3.0" PrimeLineNo="2">
+             <Item ItemID="Item1" ProductClass="GOOD" UnitOfMeasure="EACH" />
+             <PersonInfoShipTo AddressID="NickName" AddressLine1="Line1" AddressLine2="" AddressLine3="" City="City" Country="US" DayPhone="123456789" EMailID="aa@gmail.com" EveningPhone="123456789" FirstName="First" LastName="Last" State="AA" ZipCode="12345" />
+             <LinePriceInfo IsPriceLocked="Y" ListPrice="10.00" RetailPrice="11.00" UnitPrice="18.45" />
+         </OrderLine>
+     <OrderLine DeliveryMethod="SHP" OrderedQty="3.0" PrimeLineNo="3">
+             <Item ItemID="Item1" ProductClass="GOOD" UnitOfMeasure="EACH" />
+             <PersonInfoShipTo AddressID="NickName" AddressLine1="Line1" AddressLine2="" AddressLine3="" City="City" Country="US" DayPhone="123456789" EMailID="aa@gmail.com" EveningPhone="123456789" FirstName="First" LastName="Last" State="AA" ZipCode="12345" />
+             <LinePriceInfo IsPriceLocked="Y" ListPrice="10.00" RetailPrice="11.00" UnitPrice="18.45" />
+         </OrderLine>
+     </OrderLines>
+     <PersonInfoBillTo AddressLine1="Line1" AddressLine2="" AddressLine3="" City="City" Country="US" DayPhone="123456789" EMailID="aa@gmail.com" FirstName="name1" LastName="name2" MobilePhone="123456789" State="AA" ZipCode="12345" />
+ </Order>
+ </Input>
+  </API>
+  
+  <API FlowName="" IsExtendedDbApi="" Name="scheduleOrder">
+  <Input>
+  <ScheduleOrder CheckInventory="Y" DocumentType="0001" EnterpriseCode="DEFAULT" OrderHeaderKey="" OrderNo="11550060" PrimeLineNo="1" SubLineNo="1" />          </Input> </API> 
+  <API FlowName="" IsExtendedDbApi="" Name="releaseOrder">
+  <Input>
+  <ReleaseOrder DocumentType="0001" EnterpriseCode="DEFAULT" IgnoreTransactionDependencies="Y" OrderHeaderKey="" OrderNo="11550060" />
+  </Input>
+  </API>
+  </MultiApi>

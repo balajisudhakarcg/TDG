@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 
     <form method="post">
         <div class="form-group mb-4">
@@ -14,6 +14,7 @@
 
         <br>
         <label> <b>Test data generation options(click below): </b></label>
+
         <br>
         <div class="btn-group-vertical" id="process">
             <input class="btn-check form-control" type="radio" id="order" name="process" value="order">
@@ -24,8 +25,47 @@
 
 
         </div>
-        <br>
-        <br>
+        <div class="form-outline w-25" id="additional_info_container" style="display: none;">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Prefix for order no</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-sm" name="prefix" id="prefix" maxlength="4" size="4">
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="nooforders">Number of orders</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="nooforders" name="nooforders" maxlength="4" size="4">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="filegrp">Options</label>
+                </div>
+                <select class="custom-select" id="filegrp" name="filegrp">
+                    <option selected>Choose...</option>
+                    <option value="Consolidated output">Consolidated output</option>
+                    <option value="Separate files">Separate files</option>
+
+                </select>
+            </div>
+        </div>
+        <script>
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radioButton => {
+                radioButton.addEventListener('change', function() {
+                    const additionalInfoContainer = document.getElementById('additional_info_container');
+                    if (this.value === 'order') {
+                        additionalInfoContainer.style.display = 'block';
+                    } else {
+                        additionalInfoContainer.style.display = 'none';
+                    }
+                });
+            });
+        </script>
         <br>
         <button class="btn btn-secondary mb-4" type="submit">Submit</button>
         {% with messages = get_flashed_messages() %}

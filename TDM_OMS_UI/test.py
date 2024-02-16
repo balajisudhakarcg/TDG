@@ -43,7 +43,6 @@ def add_rules():
             request.form['input_tag']
         )
         add_rules_to_db(rules_details)
-        flash("Your Rules had been added successfully,check the rules table for entries!!!! ", "success")
         return render_template("add_rules.html")
     else:
         return render_template("add_rules.html")
