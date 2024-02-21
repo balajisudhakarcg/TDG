@@ -5,7 +5,7 @@ class OrderHelper:
     def __init__(self):
         self.xh = XmlHelper()
 
-    def OrderUpdates(self,up_rules, root, tree, output_path, mno_of_orders, mtype_of_op):
+    def OrderUpdates(self, up_rules, root, tree, output_path, mno_of_orders, mtype_of_op):
         print("<<<<<<<<< Creating a order xml updates >>>>>>>>>>>>>>")
         # loop through the dict and evaluate the rules against the xml
         if mno_of_orders == "1":
