@@ -5,18 +5,24 @@ class OrderHelper:
     def __init__(self):
         self.xh = XmlHelper()
 
-    def OrderUpdates(self, up_rules, root, tree, output_path, mno_of_orders, mtype_of_op):
+    def OrderUpdates(self, output_path, mno_of_orders, mtype_of_op, enterprise_data_p,
+                     creditcard_data, item_data_p, schema_path_p, rules_data_o):
         print("<<<<<<<<< Creating a order xml updates >>>>>>>>>>>>>>")
         # loop through the dict and evaluate the rules against the xml
-        if mno_of_orders == "1":
+        if mno_of_orders == "1" and mtype_of_op != "Consolidated output":
             # add the orderno prefix
-            self.xh.xml_update(up_rules, root, tree, output_path)
+            self.xh.xml_update(op_path=output_path, enterprise_data_p=enterprise_data_p,
+                               creditcard_data_p=creditcard_data, item_data_x=item_data_p,
+                               schema_path_x=schema_path_p, rules_data_p=rules_data_o, no_of_rec=mno_of_orders)
 
         elif mno_of_orders != "1" and mtype_of_op == "Consolidated output":
-            self.xh.addnodes_consolidate_op(up_rules, mno_of_orders, root, tree, output_path)
+            self.xh.add_nodes_consolidate_op(mno_of_orders_x=mno_of_orders, op_path_x=output_path,
+                                             schema_path_x=schema_path_p, enterprise_data_pn=enterprise_data_p,
+                                             creditcard_data_pn=creditcard_data, item_data_xn=item_data_p,
+                                             rules_data_pn=rules_data_o)
 
         elif mno_of_orders != "1" and mtype_of_op == "Separate files":
-            self.xh.addnodes_seperate_op(up_rules, mno_of_orders, root, tree, output_path)
+            self.xh.addnodes_seperate_op(mno_of_orders, output_path)
             # add logic for number of file
 
             # update the xml update method to update all based on xpaths

@@ -1,0 +1,28 @@
+<Order CustomerEMailID="gowthami.tapestry@outlook.com" DocumentType="0001" EnteredBy="DESKTOP" EnterpriseCode="COACH_US" EntryType="RETAIL_ECOMM" OrderDate="2024-03-25T13:58:12.692Z" OrderNo="CUD12345678" SellerOrganizationCode="COACH_US_ECOMM_FP" PriorityCode="N" SourcingClassification="DIGITAL_FULLPRICE">
+	<Extn ExtnLocale="en_US" ExtnGiftFlag="N" ExtnKountSessionID="" ExtnKountTransactionID="" ExtnCheckoutType="REGISTERED" ExtnFraudVendor="FORTER" ExtnIsPorter="N" ExtnIsSuperPorter="N" ExtnTotalAmount="189.18" ExtnCustomerNo="00032645" ExtnShopRunner="N" ExtnSRAuthenticationToken="" ExtnGiftWrap="N" ExtnIsVertexFailure="N" ExtnMemberShipID="6299998393082428333" ExtnStorefrontConfigVersion="2.4" ExtnStorefrontPlatformVersion="18.10">
+		<TPRAdyenAuthResList>
+			<TPRAdyenAuthRes RecurringDetailReference="F3HLTR8TR2M84H82" Alias="C118160549674214" CardBin="411111" />
+		</TPRAdyenAuthResList>
+	</Extn>
+	<OrderLines>
+		<OrderLine FulfillmentType="REGULAR" GiftFlag="N" GiftWrap="N" LineType="REGULAR" OrderedQty="1.0" PrimeLineNo="1" SCAC="DEFAULT" SubLineNo="1" DeliveryMethod="SHP" CarrierServiceCode="STANDARD" ReservationID="CUD00078939">
+			<Item ItemID="CC526 B4CBD" ItemDesc="Kitt Messenger Crossbody" ItemShortDesc="Kitt Messenger Crossbody" UPCCode="195031749810" UnitOfMeasure="EACH" />
+			<PersonInfoShipTo AddressLine1="6720 Mathias Rd E Unit A45" AddressLine2="" City="Graham" Country="US" DayPhone="1234567890" EMailID="gowthami.tapestry@outlook.com" FirstName="Gowthami" LastName="Subburaj" State="WA" ZipCode="98338-9440" IsPOBox="N" />
+			<Extn ExtnOMSShippingMethodID="" ExtnPrivateSaleID="" ExtnClearanceFlag="N" ExtnIsCoachtopia="N" ExtnIncludeDustBag="N" ExtnInventoryState="IN-STOCK" ExtnAnticipatedDeliveryDate="2024-04-01T13:58:12.719Z" ExtnFinalSale="N" ExtnProductCustomizationDesignID="" ExtnProductCustomizationRenderURL="" ExtnProductCustomizationDetailsURL="" ExtnProductCustomizationDetailsStrucURL="" ExtnProductCustomizationTransactionID="" ExtnProductCustomizationProgramID="" ExtnProductCustomizationProviderID="" ExtnProductCustomizationSupplierID="" ExtnProductCustomizationBaseSKU="" ExtnMonogramEmbossCode="" ExtnMonogramFontName="" ExtnMonogramFontSize="" ExtnMonogramInitials="" ExtnMonogramPlacementCode="" ExtnMonogramPosition="" ExtnMonogramPreviewURL="" ExtnProductLineItemID="" ExtnColorCode="B4CBD" ExtnColorDescription="Brass/Dark Stone" ExtnSize="" />
+			<LinePriceInfo IsPriceLocked="Y" ListPrice="175.00" RetailPrice="175.0" UnitPrice="175.00" />
+			<LineTaxes>
+				<LineTax TaxName="STATE" Tax="11.38" TaxPercentage="0.065" Reference1="11.38" Reference2="0.065" ChargeCategory="Price" ChargeName="GST" />
+				<LineTax TaxName="LOCAL" Tax="2.80" TaxPercentage="0.016" Reference1="2.80" Reference2="0.016" ChargeCategory="Price" ChargeName="GST" />
+			</LineTaxes>
+		</OrderLine>
+	</OrderLines>
+	<PersonInfoShipTo AddressLine1="6720 Mathias Rd E Unit A45" City="Graham" Country="US" DayPhone="1234567890" EMailID="gowthami.tapestry@outlook.com" FirstName="Gowthami" LastName="Subburaj" State="WA" ZipCode="98338-9440" IsPOBox="N" />
+	<PersonInfoBillTo AddressLine1="6720 Mathias Rd E Unit A45" City="Graham" Country="US" DayPhone="1234567890" EMailID="gowthami.tapestry@outlook.com" FirstName="Gowthami" LastName="Subburaj" State="WA" ZipCode="98338-9440" />
+	<PriceInfo Currency="USD" />
+	<PaymentMethods>
+		<PaymentMethod CreditCardExpDate="3/2030" CreditCardNo="1111" CreditCardType="VISA" DisplayCreditCardNo="1111" PaymentReference1="COHNA-00032645" PaymentReference2="K2VCBNJTZDS2BM65" PaymentReference3="F3HLTR8TR2M84H82" PaymentReference8="091498" PaymentType="CREDIT_CARD" MaxChargeLimit="189.18" UnlimitedCharges="Y">
+			<PersonInfoBillTo AddressLine1="6720 Mathias Rd E Unit A45" City="Graham" Country="US" DayPhone="1234567890" EMailID="gowthami.tapestry@outlook.com" FirstName="Gowthami" LastName="Subburaj" State="WA" ZipCode="98338-9440" />
+			<PaymentDetails AuthCode="091498" AuthorizationExpirationDate="2024-04-22T13:58:12.692Z" AuthorizationID="K2VCBNJTZDS2BM65" ChargeType="AUTHORIZATION" ProcessedAmount="189.18" RequestAmount="189.18" />
+		</PaymentMethod>
+	</PaymentMethods>
+</Order>

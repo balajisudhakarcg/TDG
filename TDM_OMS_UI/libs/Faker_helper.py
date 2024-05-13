@@ -1,135 +1,190 @@
+import sqlite3
+
 from faker import Faker
 from datetime import datetime, timezone
+# from libs.xml_helper import XmlHelper
+
+import random
+from libs.class1 import Class1
+from libs.class2 import Class2
+
+
+# from libs.xml_helper import XmlHelper
 
 
 class FakerHelper:
 
-    def __init__(self, prefix):
+    def __init__(self, rs, rs_cc, rs_it):
         self.fake = Faker()
-        self.prefix = prefix
+        # self.xml_h = XmlHelper()
+        self.rs = rs
+        self.rs_cc = rs_cc
+        self.rs_it = rs_it
+        self.selected_values = []
+        self.db_locale = 'rules_data.db'
+        # self.item = None
+        # self.objR = Class1()
         # Generate a random 9-digit number
 
     def get_email(self):
         return self.fake.email()
 
+    # new framework
     def get_order_number(self):
-        number = str(self.fake.random_number(digits=9))
-        number = self.prefix + number
-        # print(number)
-        # number_as_string = "{}".format(number)
-        return number
+        if self.rs is not None:
 
-    def get_order_date(self):
-        # Format the date and time as per the specified format
-        # Generate a random date and time
-        random_date_time = self.fake.date_time_this_year(tzinfo=timezone.utc)
-        formatted_date_time = random_date_time.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-        return formatted_date_time
+            # Access the value from the result tuple (assuming a single column query)
+            column_value = self.rs[2]
+            # print("Value:", column_value)
+            number = str(self.fake.random_number(digits=9))
+            number = column_value + number
+            # print(number)
+            # number_as_string = "{}".format(number)
+            return number
+        else:
+            print("No value found for the given condition.")
 
-    def get_nick_name(self):
-        # personal info nick name
-        nick_name = self.fake.name()
-        return nick_name
-        # building no 1
+    def get_seller_org(self):
+        if self.rs is not None:
+            # print(f"{self.rs} data from faker class")
+            # Access the value from the result tuple (assuming a single column query)
+            column_value = self.rs[3]
+            # print("Value:", column_value)
 
-    def get_building_no1(self):
-        # building no 1
-        building1 = self.fake.building_number()
-        return building1
+            # print(number)
+            # number_as_string = "{}".format(number)
+            return column_value
+        else:
+            print("No value found for the given condition.")
 
-    # Street number 1
-    def get_street_no1(self):
-        # Street number 1
-        street1 = self.fake.street_address()
-        st_no = street1
-        st_ret = str(st_no)
-        return st_ret
+    def get_enterprise_code(self):
+        if self.rs is not None:
+            # print(f"{self.rs} data from faker class")
+            # Access the value from the result tuple (assuming a single column query)
+            column_value = self.rs[1]
+            # print("Value:", column_value)
+            # print(number)
+            # number_as_string = "{}".format(number)
+            return column_value
+        else:
+            print("No value found for the given condition.")
 
-    # city 1
-    def get_city1(self):
-        # city 1
-        city_us1 = self.fake.city()
-        return city_us1
+    def get_item_attr_db(self):
+        ir = self.get_unique_random()
+        i_ids = 'abcde'
+        print("Value retrieved from Class3:", ir)
+        if self.rs_it is not None:
+            i_ids = self.match_shared_var_return_rs_value(self.rs_it, ir)
+            print("Value retrieved for PK:", str(i_ids[1]))
+            c_1 = Class1()
+            c_1.set_shared_variable(str(i_ids[1]))
+            # self.item = i_ids[1]
+        else:
+            print("No value found for the given condition.")
+        return i_ids
 
-    # day phone 1
-    def get_phone1(self):
-        # day phone 1
-        ph1 = self.fake.phone_number()
-        return ph1
+    def get_item_order_qty_db(self):
+        i_oq = '11'
+        # v_pk = self.xml_h.update_pk()
+        c_2 = Class2()
+        v_pk = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk)
+        if self.rs_it is not None:
+            #i_oq = self.match_shared_var_return_one_rs_value_by_row(self.rs_it, v_pk, 4)
+            i_oq = self.query_order_qty_db_fh(v_pk)
+            i_oq = str(i_oq[0])
+            print("Value retrieved for order qty:", i_oq)
+        else:
+            print("No value found for the given condition.")
+        return i_oq
 
-    # email id 2
-    def get_email1(self):
-        # email id 2
-        email_address1 = self.fake.email()
-        return email_address1
+    def get_linepriceinfo_db(self):
+        i_lpo = 'NA'
+        # v_pk = self.xml_h.update_pk()
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_lp = self.query_item_data_db_fh(v_pk_1)
+        if rs_lp is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_lp)
+            return rs_lp
 
-    # first name
-    def get_firstname1(self):
-        # first name
-        fn1 = self.fake.first_name()
-        return fn1
+        else:
+            print("No value found for the given condition.")
 
-    # second name
-    def get_lastname1(self):
-        # second name
-        ln1 = self.fake.last_name()
-        return ln1
+    def match_shared_var_return_one_rs_value_by_row_cols(self, rs, row_value, desired_columns):
+        desired_columns_1 = desired_columns  # Subset of columns you want to retrieve
 
-    # zip code
-    def get_postcode(self):
-        # zip code
-        zc1 = self.fake.postcode()
-        return zc1
+        print("Value retrieved from self faker for itemid:", row_value)
+        criteria = {'itemid': row_value}
 
-    # building no 1
-    def get_building2(self):
-        # building no 1
-        building2 = self.fake.building_number()
-        return building2
+        result = self.fetch_subset_of_columns_and_match_row(rs, desired_columns_1, criteria)
+        if result:
+            print("Matched Row:", result)
+        else:
+            print("No matching row found.")
+        return result
+        # new framework ends
 
-    # Street number 1
-    def get_street2(self):
-        # Street number 1
-        street2 = self.fake.street_address()
-        return street2
+    def get_unique_random(self):
+        while True:
+            value = random.randint(1, 9)
+            if value not in self.selected_values:
+                self.selected_values.append(value)
+            return value
 
-    # city 1
-    def get_city2(self):
-        # city 1
-        city_us2 = self.fake.city()
-        return city_us2
+        # def update_pk(self):
+        #     test_val_pk = self.item  # Update global variable
+        #     # print(f"inside method {test_val}")
+        #     return test_val_pk
 
-    # day phone 1
-    def get_ph2(self):
-        # day phone 1
-        ph2 = self.fake.phone_number()
-        return ph2
+    def fetch_subset_of_columns_and_match_row(self, rows, columns, match_criteria):
+        print(f"matching criteria : {match_criteria}")
+        subset = [{col: row[i] for i, col in enumerate(columns)} for row in rows]
+        print(f"subset : {subset}")
+        matched_rows = [row for row in subset if all(row[key] == value for key, value in match_criteria.items())]
+        print(f"matched rows =>{matched_rows}")
+        return matched_rows
 
-    # email id 2
-    def get_email2(self):
-        # email id 2
-        email_address2 = self.fake.email()
-        return email_address2
+    @staticmethod
+    def match_shared_var_return_rs_value(rs, shared_value):
+        i = 0
+        rs_value = 0
+        for row in rs:
+            if shared_value == i:
+                rs_value = row
+                print(f"{row} is the DB data from match_shared_var_return_rs_value")
+            i = i + 1
+        return rs_value
 
-    # first name
-    def get_firstname2(self):
-        # first name
-        fn2 = self.fake.first_name()
-        return fn2
+    @staticmethod
+    def match_shared_var_return_one_rs_value_by_row(rs, row_value, col_index):
+        rs_value = 'test'
+        print(f"{row_value} is the value set under match_shared_var_return_one_rs_value_by_row")
+        for row in rs:
+            if row[1] == row_value:
+                rs_value = row[col_index]
+                # print(f"{row} is the DB data")
+        return rs_value
 
-    # second name
-    def get_lastname2(self):
-        # second name
-        ln2 = self.fake.last_name()
-        return ln2
+    def query_item_data_db_fh(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+        SELECT listprice, retailprice, unitprice FROM item_data WHERE itemid=?   
+        """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
 
-    # zip code
-    def get_zipcode2(self):
-        # zip code
-        zc2 = self.fake.postcode()
-        return zc2
-
-    def get_state1(self):
-        # state
-        state_us1 = self.fake.state()
-        return state_us1
+    def query_order_qty_db_fh(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+        SELECT orderedqty FROM item_data WHERE itemid=?   
+        """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
