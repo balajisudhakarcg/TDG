@@ -24,6 +24,8 @@ class XmlHelper:
         updated_m_tree_2 = self.mul_record_updates(updated_m_tree_1, rules_data_pn, enterprise_data_pn,
                                                    creditcard_data_pn, item_data_xn)
 
+
+        # code to add overall total ???
         # write the updated xml
         updated_m_tree_2.write(op_path_x, encoding='utf-8', xml_declaration=True)
 
@@ -90,9 +92,9 @@ class XmlHelper:
                                                 print(f"{x} found in schema")
 
                     elif "," not in s:
-                        print("child no sper")
+                        print("child no sepr")
                         get_node_attrs = root_2.findall(b.xp)
-
+                        get_node_disc = root_2.findall('Promotions') # use this logic to set retail price
                         if get_node_attrs is not None:
                             print("multi node success")
                             for j, node in enumerate(get_node_attrs):
@@ -109,6 +111,23 @@ class XmlHelper:
                                             node.set(b.attr, rvalue[0])
                                             del rvalue
                                             print(f"{b.attr} found in schema")
+                        elif get_node_disc is not None:
+                            print("multi node success")
+                            for j, node in enumerate(get_node_attrs):
+                                if j == i:
+                                    print("multi node success in for")
+                                    # Extract and print all attribute values for each node
+                                    for attr, value in node.attrib.items():
+                                        # print(f"Node: {node.tag}, Attribute: {attr}, Value: {value}")
+                                        if attr == b.attr:
+                                            rvalue = b.action()
+                                            print("______________________________________")
+                                            print(f"{rvalue[0]} is the output from faker method")
+                                            print("______________________________________")
+                                            node.set(b.attr, rvalue[0])
+                                            del rvalue
+                                            print(f"{b.attr} found in schema")
+
 
         #xml_doc = ET.tostring(root_2, encoding="unicode")
         #print(xml_doc)
