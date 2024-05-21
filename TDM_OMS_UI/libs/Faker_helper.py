@@ -91,7 +91,7 @@ class FakerHelper:
         # r_value = obj_c2.print_shared_variable()
         print("Value retrieved from self faker:", v_pk)
         if self.rs_it is not None:
-            #i_oq = self.match_shared_var_return_one_rs_value_by_row(self.rs_it, v_pk, 4)
+            # i_oq = self.match_shared_var_return_one_rs_value_by_row(self.rs_it, v_pk, 4)
             i_oq = self.query_order_qty_db_fh(v_pk)
             i_oq = str(i_oq[0])
             print("Value retrieved for order qty:", i_oq)
@@ -112,6 +112,42 @@ class FakerHelper:
             # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
             print("Value retrieved for line price info:", rs_lp)
             return rs_lp
+
+        else:
+            print("No value found for the given condition.")
+
+    # get the discount information and update the lineprice info too
+    def get_discount_info(self):
+        i_ldo = 'NA'
+        # v_pk = self.xml_h.update_pk()
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_d = self.query_discount_data(v_pk_1)
+        if rs_d is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_d)
+            return rs_d
+
+        else:
+            print("No value found for the given condition.")
+
+    # single method to update the discounted retail price
+    def get_discounted_retail_price(self):
+        i_ldo = 'NA'
+        # v_pk = self.xml_h.update_pk()
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_d = self.query_discount_retail_price(v_pk_1)
+        if rs_d is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_d)
+            return rs_d
 
         else:
             print("No value found for the given condition.")
@@ -186,5 +222,24 @@ class FakerHelper:
         c.execute("""
         SELECT orderedqty FROM item_data WHERE itemid=?   
         """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    # method to retrieve the discount , unit price for an item
+    def query_discount_data(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                SELECT chargecategory,chargeperline,chargeperunit,chargename FROM item_data WHERE itemid=?   
+                """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    def query_discount_retail_price(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT retailprice_d FROM item_data WHERE itemid=?   
+                   """, (itemid,))
         r_data = c.fetchone()
         return r_data
