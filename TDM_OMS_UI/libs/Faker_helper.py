@@ -22,6 +22,7 @@ class FakerHelper:
         self.rs_it = rs_it
         self.selected_values = []
         self.db_locale = 'rules_data.db'
+        # add varibale for state
         # self.item = None
         # self.objR = Class1()
         # Generate a random 9-digit number
@@ -243,3 +244,143 @@ class FakerHelper:
                    """, (itemid,))
         r_data = c.fetchone()
         return r_data
+
+    def query_state_tax(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT taxname,tax,taxpercentage,reference1,reference2 FROM tax_data WHERE taxname='state' AND  itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    def query_district_tax(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT taxname,tax,taxpercentage,reference1,reference2 FROM tax_data WHERE taxname='district' AND itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    def query_city_tax(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT taxname,tax,taxpercentage,reference1,reference2 FROM tax_data WHERE taxname='city' AND itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    # get the sate Tax information for given particular state value
+    def get_state_tax(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        state_tax = self.query_state_tax(v_pk_1)
+        if state_tax is not None:
+            print("Value retrieved for Tax info:", state_tax)
+            return state_tax
+        else:
+            print("No value found for the given condition.")
+
+    # get the district Tax information for given particular state value
+    def get_district_tax(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        district_tax = self.query_district_tax(v_pk_1)
+        if district_tax is not None:
+            print("Value retrieved for Tax info:", district_tax)
+            return district_tax
+        else:
+            print("No value found for the given condition.")
+
+    # get the city Tax information for given particular state value
+    def get_city_tax(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        city_tax = self.query_city_tax(v_pk_1)
+        if city_tax is not None:
+            print("Value retrieved for Tax info:", city_tax)
+            return city_tax
+        else:
+            print("No value found for the given condition.")
+
+    # method to get the address based on itemid
+    def query_shipping_addr(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT AddressLine1,AddressLine2,City,Country,DayPhone,EMailID,FirstName,LastName,State,ZipCode FROM shipping_address_data WHERE itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    # set the state value to get the tax values
+    def get_personal_ship_info(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_ship = self.query_shipping_addr(v_pk_1)
+        if rs_ship is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_ship)
+            return rs_ship
+
+        else:
+            print("No value found for the given condition.")
+
+    def get_credit_card_info(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_ship = self.query_credit_card_details(v_pk_1)
+        if rs_ship is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_ship)
+            return rs_ship
+
+        else:
+            print("No value found for the given condition.")
+
+    def query_credit_card_details(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT CreditCardExpDate,CreditCardNo,CreditCardType,DisplayCreditCardNo FROM credit_card_data WHERE itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    def query_credit_card_addr(self, itemid):
+        connie = sqlite3.connect(self.db_locale)
+        c = connie.cursor()
+        c.execute("""
+                   SELECT AddressLine1,City,Country,DayPhone,EMailID,FirstName,LastName,State,ZipCode FROM credit_card_data WHERE itemid=?   
+                   """, (itemid,))
+        r_data = c.fetchone()
+        return r_data
+
+    def get_credit_card_addr(self):
+        c_2 = Class2()
+        v_pk_1 = c_2.print_shared_variable()
+        # r_value = obj_c2.print_shared_variable()
+        print("Value retrieved from self faker:", v_pk_1)
+        rs_ship = self.query_credit_card_addr(v_pk_1)
+        if rs_ship is not None:
+            # desired_columns = ['itemid', 'listprice', 'retailprice', 'unitprice']
+            # i_lpo = self.match_shared_var_return_one_rs_value_by_row_cols(self.rs_it, v_pk_1, desired_columns)
+            print("Value retrieved for line price info:", rs_ship)
+            return rs_ship
+
+        else:
+            print("No value found for the given condition.")
