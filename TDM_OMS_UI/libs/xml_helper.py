@@ -24,10 +24,13 @@ class XmlHelper:
         updated_m_tree_2 = self.mul_record_updates(updated_m_tree_1, rules_data_pn, enterprise_data_pn,
                                                    creditcard_data_pn, item_data_xn)
 
-
         # code to add overall total ???
+        # add the totaling logic
+        updated_tree_t = self.update_total_amount(updated_m_tree_2)
+        # write the updated logic
+        updated_tree_t.write(op_path_x, encoding='utf-8', xml_declaration=True)
         # write the updated xml
-        updated_m_tree_2.write(op_path_x, encoding='utf-8', xml_declaration=True)
+        # updated_m_tree_2.write(op_path_x, encoding='utf-8', xml_declaration=True)
 
     # ===========method to apply the rules ===================
     @staticmethod
@@ -39,6 +42,7 @@ class XmlHelper:
         order_lines = root_2.findall('.//Item')
         for i, order_line in enumerate(order_lines):
             print(f"increment -- {i}")
+
             # loop through the rules
             engine_i = RulesEngine()
             up_rules_i = RulesDefinition(rules_data_p, enterprise_data_p, creditcard_data_p, item_data_x)
@@ -85,16 +89,17 @@ class XmlHelper:
                                             if attr == x:
                                                 rvalue = b.action()
                                                 print("______________________________________")
-                                                print(f"{rvalue[y]} is the output from faker method for separator/child")
+                                                print(
+                                                    f"{rvalue[y]} is the output from faker method for separator/child")
                                                 print("______________________________________")
                                                 node.set(str(x), str(rvalue[y]))
-                                                #del rvalue
+                                                # del rvalue
                                                 print(f"{x} found in schema")
 
                     elif "," not in s:
                         print("child no sepr")
                         get_node_attrs = root_2.findall(b.xp)
-                        get_node_disc = root_2.findall('Promotions') # use this logic to set retail price
+                        get_node_disc = root_2.findall('Promotions')  # use this logic to set retail price
                         if get_node_attrs is not None:
                             print("multi node success")
                             for j, node in enumerate(get_node_attrs):
@@ -128,9 +133,8 @@ class XmlHelper:
                                             del rvalue
                                             print(f"{b.attr} found in schema")
 
-
-        #xml_doc = ET.tostring(root_2, encoding="unicode")
-        #print(xml_doc)
+        # xml_doc = ET.tostring(root_2, encoding="unicode")
+        # print(xml_doc)
         return tree_2
 
     # =====copy order lines based on the no of rec and return the xml tree====
@@ -151,14 +155,28 @@ class XmlHelper:
         return mtree
 
     def xml_update(self, op_path, rules_data_p, enterprise_data_p,
-                   creditcard_data_p, item_data_x, schema_path_x, no_of_rec):
+                   creditcard_data_p, item_data_x, schema_path_x):
         # parse the xml
         tree_1 = self.parse_xml(schema_path_x)
         # loop over the rules to init them
         updated_tree = self.one_record_updates(rules_data_p, enterprise_data_p, creditcard_data_p,
                                                item_data_x, tree_1)
-        updated_tree.write(op_path, encoding='utf-8', xml_declaration=True)
+        # add the totaling logic
+        updated_tree_t = self.update_total_amount(updated_tree)
+        # write the updated logic
+        updated_tree_t.write(op_path, encoding='utf-8', xml_declaration=True)
+        # updated_tree.write(op_path, encoding='utf-8', xml_declaration=True)
         print("<<<<<<< Schema is updated and written to a xml file in folder output >>>>>>>>>")
+
+    def add_nodes_separate_op(self, op_path_a, rules_data_p_a, enterprise_data_p_a,
+                              creditcard_data_p_a, item_data_x_a, schema_path_x_a, no_of_rec):
+        for x in range(int(no_of_rec)):
+            op_path = op_path_a.replace(".xml", "_" + str(x) + ".xml")
+            self.xml_update(op_path, rules_data_p_a, enterprise_data_p_a,
+                            creditcard_data_p_a, item_data_x_a, schema_path_x_a)
+
+
+
 
     # ======== init the rules engine and apply the action methods===========
     @staticmethod
@@ -188,13 +206,16 @@ class XmlHelper:
                     print(list_length)
                     for x in my_list:
                         print(f"{x} is the value of x")
-                        get_node = root_o_r.find(b.xp).get(x)
+                        print(f"{b.xp} is the value of b.xp")
+                        # get_node = root_o_r.find(b.xp).get(x)
+                        get_node = root_o_r.find(b.xp)
                         if get_node is not None:
                             # print("success for tags logic")
                             # print(f"{rvalue} is the output from lambda")
-                            y = my_list.index(x) + 1
+                            # y = my_list.index(x) + 1
+                            y = my_list.index(x)
                             print(f"{rvalue[y]} is the rs output from lambda update_child_attr")
-                            root_o_r.find(b.xp).set(str(x), rvalue[y])
+                            root_o_r.find(b.xp).set(str(x), str(rvalue[y]))
                         else:
                             print(f" {str(x)} node not found")
         return tree_o_r
@@ -203,3 +224,46 @@ class XmlHelper:
     def parse_xml(self, xml_string_p):
         tree = ET.parse(xml_string_p)
         return tree
+
+    def update_total_amount(self, xml_content):
+        # Parse the XML content
+        # tree_u = ET.parse(xml_content)
+        root_u = xml_content.getroot()
+        # Initialize the total amount
+        total_amount = 0
+
+        # Iterate over each OrderLine
+        for order_line in root_u.findall('.//OrderLine'):
+            # Get RetailPrice
+            retail_price = float(order_line.find('.//LinePriceInfo').get('RetailPrice'))
+
+            # Get OrderedQty
+            ordered_qty = float(order_line.get('OrderedQty'))
+
+            # Get ChargePerUnit
+            try:
+                charge_per_unit = float(order_line.find('.//LineCharge').get('ChargePerUnit'))
+                # Calculate the amount for this order line
+                line_total = retail_price - (charge_per_unit * ordered_qty)
+            except:
+                print("An exception occurred")
+                line_total = retail_price
+                # Add to the total amount
+            total_amount += line_total
+            # Add all tax amounts
+            for line_tax in order_line.findall('.//LineTax'):
+                total_amount += float(line_tax.get('Tax'))
+
+        # Update the ExtnTotalAmount attribute
+        extn_element = root_u.find('.//Extn')
+        extn_element.set('ExtnTotalAmount', str(total_amount))
+        # MaxChargeLimit ProcessedAmount RequestAmount
+        extn_element1 = root_u.find('.//PaymentMethod')
+        extn_element1.set('MaxChargeLimit', str(total_amount))
+        extn_element2 = root_u.find('.//PaymentDetails')
+        extn_element2.set('ProcessedAmount', str(total_amount))
+        extn_element2.set('RequestAmount', str(total_amount))
+
+        return xml_content
+
+
